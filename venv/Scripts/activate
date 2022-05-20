@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\RoyWoods}\Downloads\Part-08 PayPal Integration\Part-08 PayPal Integration\venv"
+VIRTUAL_ENV="C:\Users\Alumno\Integracion\MiCondominio\venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
