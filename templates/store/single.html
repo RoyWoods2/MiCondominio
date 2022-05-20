@@ -5,6 +5,8 @@
 {% if product %}{{ product.title }}{% else %}Product{% endif %}
 {% endblock %}
 {% block content %}
+<body>
+  
 
 <div class="container">
 {% if messages %}
@@ -61,6 +63,7 @@
       </div>
     </div>
   </div>
+</body>
 
   <script>
     $(document).on('click', '#add-button', function (e) {
