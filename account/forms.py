@@ -35,11 +35,11 @@ class UserAddressForm(forms.ModelForm):
 class UserLoginForm(AuthenticationForm):
 
     username = forms.CharField(widget=forms.TextInput(
-        attrs={'class': 'form-control mb-3', 'placeholder': 'Username', 'id': 'login-username'}))
+        attrs={'class': 'form-control mb-3', 'placeholder': 'Usuario', 'id': 'login-username'}))
     password = forms.CharField(widget=forms.PasswordInput(
         attrs={
             'class': 'form-control',
-            'placeholder': 'Password',
+            'placeholder': 'Contraseña',
             'id': 'login-pwd',
         }
     ))
@@ -48,12 +48,12 @@ class UserLoginForm(AuthenticationForm):
 class RegistrationForm(forms.ModelForm):
 
     user_name = forms.CharField(
-        label='Enter Username', min_length=4, max_length=50, help_text='Required')
+        label='Ingrese Usuario', min_length=4, max_length=50, help_text='Obligatorio')
     email = forms.EmailField(max_length=100, help_text='Required', error_messages={
-        'required': 'Sorry, you will need an email'})
-    password = forms.CharField(label='Password', widget=forms.PasswordInput)
+        'Obligatorio': 'Necesita Ingresar un email'})
+    password = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
     password2 = forms.CharField(
-        label='Repeat password', widget=forms.PasswordInput)
+        label='Repetir Contraseña', widget=forms.PasswordInput)
 
     class Meta:
         model = Customer
@@ -63,30 +63,30 @@ class RegistrationForm(forms.ModelForm):
         user_name = self.cleaned_data['user_name'].lower()
         r = Customer.objects.filter(user_name=user_name)
         if r.count():
-            raise forms.ValidationError("Username already exists")
+            raise forms.ValidationError("Usuariio ya existe")
         return user_name
 
     def clean_password2(self):
         cd = self.cleaned_data
         if cd['password'] != cd['password2']:
-            raise forms.ValidationError('Passwords do not match.')
+            raise forms.ValidationError('Contraseña no concuerda')
         return cd['password2']
 
     def clean_email(self):
         email = self.cleaned_data['email']
         if Customer.objects.filter(email=email).exists():
             raise forms.ValidationError(
-                'Please use another Email, that is already taken')
+                'Email se encuentra en uso')
         return email
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['user_name'].widget.attrs.update(
-            {'class': 'form-control mb-3', 'placeholder': 'Username'})
+            {'class': 'form-control mb-3', 'placeholder': 'Usuario'})
         self.fields['email'].widget.attrs.update(
-            {'class': 'form-control mb-3', 'placeholder': 'E-mail', 'name': 'email', 'id': 'id_email'})
+            {'class': 'form-control mb-3', 'placeholder': 'E-mail', 'Nombre': 'email', 'id': 'id_email'})
         self.fields['password'].widget.attrs.update(
-            {'class': 'form-control mb-3', 'placeholder': 'Password'})
+            {'class': 'form-control mb-3', 'placeholder': 'Contraseña'})
         self.fields['password2'].widget.attrs.update(
             {'class': 'form-control', 'placeholder': 'Repeat Password'})
 
@@ -101,17 +101,17 @@ class PwdResetForm(PasswordResetForm):
         u = Customer.objects.filter(email=email)
         if not u:
             raise forms.ValidationError(
-                'Unfortunatley we can not find that email address')
+                'No se encuentra email')
         return email
 
 
 class PwdResetConfirmForm(SetPasswordForm):
     new_password1 = forms.CharField(
         label='New password', widget=forms.PasswordInput(
-            attrs={'class': 'form-control mb-3', 'placeholder': 'New Password', 'id': 'form-newpass'}))
+            attrs={'class': 'form-control mb-3', 'placeholder': 'Contraseña nueva', 'id': 'form-newpass'}))
     new_password2 = forms.CharField(
         label='Repeat password', widget=forms.PasswordInput(
-            attrs={'class': 'form-control mb-3', 'placeholder': 'New Password', 'id': 'form-new-pass2'}))
+            attrs={'class': 'form-control mb-3', 'placeholder': 'Contraseña nueva', 'id': 'form-new-pass2'}))
 
 
 class UserEditForm(forms.ModelForm):
@@ -122,11 +122,11 @@ class UserEditForm(forms.ModelForm):
 
     user_name = forms.CharField(
         label='Firstname', min_length=4, max_length=50, widget=forms.TextInput(
-            attrs={'class': 'form-control mb-3', 'placeholder': 'Username', 'id': 'form-firstname', 'readonly': 'readonly'}))
+            attrs={'class': 'form-control mb-3', 'placeholder': 'Usuario', 'id': 'form-firstname', 'readonly': 'readonly'}))
 
     first_name = forms.CharField(
         label='Username', min_length=4, max_length=50, widget=forms.TextInput(
-            attrs={'class': 'form-control mb-3', 'placeholder': 'Firstname', 'id': 'form-lastname'}))
+            attrs={'class': 'form-control mb-3', 'placeholder': 'Nombre', 'id': 'form-lastname'}))
 
     class Meta:
         model = Customer
